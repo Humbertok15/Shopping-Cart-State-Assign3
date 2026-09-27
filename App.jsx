@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './App.css';
 import Header from './components/Header.jsx';
 import Hero from './components/Hero.jsx';
@@ -5,6 +6,7 @@ import ProductCard from './components/ProductCard.jsx';
 import Footer from './components/Footer.jsx';
 
 function App() {
+  // Step 2: Products data array
   const products = [
     {
       id: 1,
@@ -56,9 +58,23 @@ function App() {
     }
   ];
 
+  // Step 3: Shopping cart state
+  const [cart, setCart] = useState([]);
+
+  // Step 4: Add product to cart
+  const addToCart = (product) => {
+    console.log('Added to cart:', product);
+
+    setCart([...cart, product]);
+  };
+
   return (
     <div className="app">
-      <Header storeName="ComponentCorner" />
+      {/* Step 7: Pass cart count to Header */}
+      <Header
+        storeName="ComponentCorner"
+        cartCount={cart.length}
+      />
 
       <main>
         <Hero
@@ -70,7 +86,9 @@ function App() {
         <section className="products-section" id="products">
           <div className="section-heading">
             <p className="eyebrow">Featured collection</p>
+
             <h2>Popular Tech Picks</h2>
+
             <p>
               Explore our latest favorites, all presented with reusable React
               components.
@@ -78,10 +96,12 @@ function App() {
           </div>
 
           <div className="product-grid">
+            {/* Steps 5 and 6: Pass product and addToCart */}
             {products.map((product) => (
               <ProductCard
                 key={product.id}
                 product={product}
+                onAddToCart={addToCart}
               />
             ))}
           </div>
@@ -97,5 +117,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
